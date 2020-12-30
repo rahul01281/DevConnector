@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
 
-function Register() {
+function Register({ setAlert }) {
 
     const [ formData, setFormData ] = useState({
         name: '',
@@ -18,7 +19,7 @@ function Register() {
     const onSubmit = async (e) => {
         e.preventDefault();
         if(password !== password2){
-            console.log("Not same password");
+            setAlert('Passwords do not match', 'danger');
         } else{
             console.log('success');
         }
@@ -70,4 +71,4 @@ function Register() {
     )
 }
 
-export default Register
+export default connect(null, { setAlert })(Register);
