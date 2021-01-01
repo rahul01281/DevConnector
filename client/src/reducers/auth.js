@@ -1,6 +1,8 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  USER_LOADED,
+  AUTH_ERROR
 } from '../actions/types';
 
 const initialState = {
@@ -25,12 +27,21 @@ export default function(state = initialState, action) {
             }
 
         case REGISTER_FAIL:
+        case AUTH_ERROR:
             localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,
                 isAuthenticated: false,
                 loading: false
+            }
+
+        case USER_LOADED:
+            return {
+                ...state,
+                isAuthenticated: true,
+                loading: false,
+                user: payload
             }
         
         default:
