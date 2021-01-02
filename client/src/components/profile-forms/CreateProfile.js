@@ -1,7 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
+import { createProfile } from '../../actions/profile';
+import { Link, withRouter } from 'react-router-dom';
 
-function CreateProfile() {
+function CreateProfile({ createProfile, history }) {
 
     const [formData, setFormData] = useState({
         company: '',
@@ -39,6 +41,11 @@ function CreateProfile() {
       setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  const onSubmit = (e) => {
+      e.preventDefault();
+      createProfile(formData, history);
+  }
+
     return (
         <Fragment>
             <h1 className="large text-primary">
@@ -49,9 +56,9 @@ function CreateProfile() {
                 profile stand out
             </p>
             <small>* = required field</small>
-            <form className="form">
+            <form className="form" onSubmit={onSubmit}>
                 <div className="form-group">
-                <select name="status" value={status} onChange={e => onChange(e)}>
+                <select name="status" value={status} onChange={onChange}>
                     <option value="0">* Select Professional Status</option>
                     <option value="Developer">Developer</option>
                     <option value="Junior Developer">Junior Developer</option>
@@ -71,7 +78,7 @@ function CreateProfile() {
                     >Could be your own company or one you work for</small>
                 </div>
                 <div className="form-group">
-                <input type="text" placeholder="Website" name="website" value={website} onChange={e => onChange} />
+                <input type="text" placeholder="Website" name="website" value={website} onChange={onChange} />
                 <small className="form-text"
                     >Could be your own or a company website</small>
                 </div>
@@ -145,4 +152,4 @@ function CreateProfile() {
     )
 }
 
-export default connect()(CreateProfile);
+export default connect(null, { createProfile })(withRouter(CreateProfile));
