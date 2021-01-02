@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { getCurrentProfile } from '../../actions/profile';
 
-function Dashboard() {
+function Dashboard({ getCurrentProfile, auth, profile }) {
+
+    useEffect(() => {
+        getCurrentProfile();
+    }, []);
+
     return (
         <div>
             Dashboard
@@ -8,4 +15,9 @@ function Dashboard() {
     )
 }
 
-export default Dashboard
+const mapStateToProps = state => ({
+    auth: state.auth,
+    profile: state.profile
+});
+
+export default connect(mapStateToProps, { getCurrentProfile }) (Dashboard);
