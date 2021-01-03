@@ -11,7 +11,7 @@ function Dashboard({ getCurrentProfile, auth:{user}, profile:{profile, loading},
 
     useEffect(() => {
         getCurrentProfile();
-    }, []);
+    }, [getCurrentProfile]);
 
     return(
         loading && profile === null ? <Spinner /> :

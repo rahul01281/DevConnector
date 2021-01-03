@@ -39,7 +39,7 @@ function EditProfile({ profile:{ profile, loading }, createProfile, history, get
             linkedin: loading || !profile.linkedin ? '' : profile.linkedin,
             youtube: loading || !profile.youtube ? '' : profile.youtube
         });
-    }, [loading]); //so when it loads, this useEffect will run
+    }, [loading, getCurrentProfile]); //so when it loads, this useEffect will run
 
     const {
         company,
