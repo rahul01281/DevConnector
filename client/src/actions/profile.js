@@ -3,7 +3,9 @@ import { setAlert } from './alert';
 import {
     GET_PROFILE,
     PROFILE_ERROR,
-    UPDATE_PROFILE
+    UPDATE_PROFILE,
+    DELETE_ACCOUNT,
+    CLEAR_PROFILE
 } from './types';
 
 //get the current user profile
@@ -125,4 +127,67 @@ export const addEducation = (formData, history) => async dispatch => {
             payload: { msg: error.response.statusText, status: error.response.status }
         })
     }
+};
+
+//delete experience
+export const deleteExperience = (id) => async dispatch => {
+    try {
+        const res = await axios.delete(`/api/profile/experience/${id}`);
+
+        dispatch({
+            type:UPDATE_PROFILE,
+            payload:res.data
+        });
+
+        dispatch(setAlert('Experience Removed', 'success'));
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+};
+
+//delete education
+export const deleteEducation = (id) => async dispatch => {
+    try {
+        const res = await axios.delete(`/api/profile/education/${id}`);
+
+        dispatch({
+            type:UPDATE_PROFILE,
+            payload:res.data
+        });
+
+        dispatch(setAlert('Education Removed', 'success'));
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+};
+
+//delete account
+export const deleteAccount = () => async dispatch => {
+    if(window.confirm("Are you sure? This cannot be undone!")){
+        try {
+            const res = await axios.delete('/api/profile');
+
+            dispatch({
+                type:CLEAR_PROFILE
+            });
+
+            dispatch({
+                type:DELETE_ACCOUNT
+            });
+
+            dispatch(setAlert('Your account has been deleted.'));
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error.response.statusText, status: error.response.status }
+            })
+        }
+    }
+    
 }

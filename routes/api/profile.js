@@ -7,6 +7,7 @@ const config = require('config');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 // @route     GET api/profile/me
 // @desc      get current users profile
@@ -146,7 +147,8 @@ router.get('/user/:user_id', async (req, res) => {
 // @access    private
 router.delete('/', auth, async (req, res) => {
     try {
-        //@todo- remove user posts
+        //remove user posts
+        await Post.deleteMany({ user: req.user.id });
 
         //remove profile
         await Profile.findOneAndRemove({ user: req.user.id })
@@ -230,6 +232,27 @@ router.put('/education', [ auth, [
         const profile = await Profile.findOne({ user: req.user.id });
 
         profile.education.unshift(newEdu);
+
+        await profile.save();
+
+        res.json(profile);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('server error');
+    }
+});
+
+// @route     DELETE api/profile/experience/:exp_id
+// @desc      delete profile experience
+// @access    private
+router.delete('/experience/:exp_id', auth, async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        //get remove index
+        const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id); //get the experience of that id
+
+        profile.experience.splice(removeIndex, 1);
 
         await profile.save();
 
