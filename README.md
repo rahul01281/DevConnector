@@ -1,6 +1,7 @@
 # DevConnector
 
 Social network for developers built using MongoDB, Express, React and Node.js.
+
 Redux is used for a state management.
 
 ## Functionality
