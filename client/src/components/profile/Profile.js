@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { getProfileById } from '../../actions/profile';
 import { Link } from 'react-router-dom';
+import ProfileTop from './ProfileTop';
+import ProfileAbout from './ProfileAbout';
 
 function Profile({ match, getProfileById, profile:{profile, loading}, auth }) {
 
     useEffect(() => {
         getProfileById(match.params.id);
-    }, [getProfileById])
+    }, [getProfileById, match.params.id])
 
     return (
         <Fragment>
@@ -20,6 +22,10 @@ function Profile({ match, getProfileById, profile:{profile, loading}, auth }) {
                     Edit
                 </Link>)
                 }
+                <div className="profile-grid my-1">
+                    <ProfileTop profile={profile} />
+                    <ProfileAbout profile={profile} />
+                </div>
             </Fragment>}
         </Fragment>
     )
