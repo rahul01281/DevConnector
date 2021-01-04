@@ -8,14 +8,14 @@ function PostItem({post: {_id, text, name, avatar, user, likes, comments, date},
     return (
         <div className="post bg-white p-1 my-1">
           <div>
-            <a href="profile.html">
+            <Link to={`/profile/${user}`}>
               <img
                 className="round-img"
                 src={avatar}
                 alt=""
               />
               <h4>{name}</h4>
-            </a>
+            </Link>
           </div>
           <div>
             <p className="my-1">
