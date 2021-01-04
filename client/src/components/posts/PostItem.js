@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { addLike, removeLike, deletePost } from '../../actions/post';
 
-function PostItem({post: {_id, text, name, avatar, user, likes, comments, date}, auth, addLike, removeLike, deletePost}) {
+function PostItem({post: {_id, text, name, avatar, user, likes, comments, date}, auth, addLike, removeLike, deletePost, showActions}) {
     return (
         <div className="post bg-white p-1 my-1">
           <div>
@@ -24,27 +24,34 @@ function PostItem({post: {_id, text, name, avatar, user, likes, comments, date},
              <p className="post-date">
                 Posted on <Moment format="YYYY/MM/DD">{date}</Moment>
             </p>
-            <button type="button" className="btn btn-light" onClick={e => addLike(_id)}>
-              <i className="fas fa-thumbs-up"></i>
-              <span>{likes.length}</span>
-            </button>
-            <button type="button" className="btn btn-light" onClick={e => removeLike(_id)}>
-              <i className="fas fa-thumbs-down"></i>
-            </button>
-            <Link to={`/post/${_id}`} className="btn btn-primary">
-              Comments <span className='comment-count'>{comments.length}</span>
-            </Link>
-            {!auth.loading && user === auth.user.user._id && (
-                <button      
-                type="button"
-                className="btn btn-danger" onClick={e => deletePost(_id)}>
-                <i className="fas fa-times"></i>
-            </button>
-            )}       
+            {showActions && <Fragment>
+                <button type="button" className="btn btn-light" onClick={e => addLike(_id)}>
+                  <i className="fas fa-thumbs-up"></i>
+                  <span>{likes.length}</span>
+                </button>
+                <button type="button" className="btn btn-light" onClick={e => removeLike(_id)}>
+                  <i className="fas fa-thumbs-down"></i>
+                </button>
+                <Link to={`/post/${_id}`} className="btn btn-primary">
+                  Comments <span className='comment-count'>{comments.length}</span>
+                </Link>
+                {!auth.loading && user === auth.user.user._id && (
+                    <button      
+                    type="button"
+                    className="btn btn-danger" onClick={e => deletePost(_id)}>
+                    <i className="fas fa-times"></i>
+                </button>
+                )}
+              </Fragment>}
+                   
           </div>
         </div>
     )
 };
+
+PostItem.defaultProps = {
+  showActions: true
+}
 
 const mapStateToProps = state => ({
     auth: state.auth
