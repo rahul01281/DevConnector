@@ -75,7 +75,7 @@ function EditProfile({ profile:{ profile, loading }, createProfile, history, get
                 profile stand out
             </p>
             <small>* = required field</small>
-            <form className="form" onSubmit={onSubmit}>
+            <form className="form" onSubmit={(e) => onSubmit()}>
                 <div className="form-group">
                 <select name="status" value={status} onChange={onChange}>
                     <option value="0">* Select Professional Status</option>
