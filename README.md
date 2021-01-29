@@ -28,4 +28,3 @@ Redux is used for a state management.
 3. `cd client && npm install` - to install client dependencies
 4. `npm run dev` - runs backend and frontend
 
-Based on [udemy course](https://www.udemy.com/mern-stack-front-to-back/)
